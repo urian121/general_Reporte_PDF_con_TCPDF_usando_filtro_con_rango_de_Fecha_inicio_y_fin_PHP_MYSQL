@@ -1,10 +1,11 @@
 <?php
-require_once('tcpdf/tcpdf.php');
-require_once('config.php');
+require_once('tcpdf/tcpdf.php'); //Llamando a la Libreria TCPDF
+require_once('config.php'); //Llamando a la conexión para BD
 date_default_timezone_set('America/Bogota');
 
 
 ob_end_clean(); //limpiar la memoria
+
 
 class MYPDF extends TCPDF{
       
@@ -16,34 +17,29 @@ class MYPDF extends TCPDF{
             $this->Image($img_file, 85, 8, 20, 25, '', '', '', false, 30, '', false, false, 0);
             $this->SetAutoPageBreak($auto_page_break, $bMargin);
             $this->setPageMark();
-	}
-
-
+	    }
 }
 
-//iniciando un nuevo pdf
+
+//Iniciando un nuevo pdf
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, 'mm', 'Letter', true, 'UTF-8', false);
  
-//establecer margenes
-$pdf->SetMargins(25, 35, 25);
+//Establecer margenes del PDF
+$pdf->SetMargins(20, 35, 25);
 $pdf->SetHeaderMargin(20);
 $pdf->setPrintFooter(false);
-$pdf->setPrintHeader(true); //para eliminar la linea superio del pdf por defecto y tambien ej hearder
-$pdf->SetAutoPageBreak(false);  //IMPORTANTISIMO,permite bajar un elemento y eliminar el crear otra otra.
+$pdf->setPrintHeader(true); //Eliminar la linea superior del PDF por defecto
+$pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM); //Activa o desactiva el modo de salto de página automático
  
-//informacion del pdf
+//Informacion del PDF
 $pdf->SetCreator('UrianViera');
 $pdf->SetAuthor('UrianViera');
-$pdf->SetTitle('Factura de Pedido');
-
-
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+$pdf->SetTitle('Informe de Empleados');
  
 
-//agregar la primera pagina
+//Agregando la primera página
 $pdf->AddPage();
-//tipo de fuente y tamaño de letra
-$pdf->SetFont('helvetica','B',10); 
+$pdf->SetFont('helvetica','B',10); //Tipo de fuente y tamaño de letra
 $pdf->SetXY(150, 20);
 $pdf->Write(0, 'Código: 0014ABC');
 $pdf->SetXY(150, 25);
@@ -51,34 +47,38 @@ $pdf->Write(0, 'Fecha: '. date('d-m-Y'));
 $pdf->SetXY(150, 30);
 $pdf->Write(0, 'Hora: '. date('h:i A'));
 
-
-$pdf->SetFont('helvetica','B',10); 
-$pdf->SetXY(15, 20);
-$pdf->Write(0, 'Cliente Grommer');
+$canal ='WebDeveloper';
+$pdf->SetFont('helvetica','B',10); //Tipo de fuente y tamaño de letra
+$pdf->SetXY(15, 20); //Margen en X y en Y
+$pdf->SetTextColor(204,0,0);
+$pdf->Write(0, 'Desarrollador: Urian Viera');
+$pdf->SetTextColor(0, 0, 0); //Color Negrita
 $pdf->SetXY(15, 25);
-$pdf->Write(0, 'Nombre: 654654');
-$pdf->SetXY(15, 30);
-$pdf->Write(0, 'Email: 54654645');
+$pdf->Write(0, 'Canal: '. $canal);
 
 
 
-$pdf->Ln(20);
+$pdf->Ln(35); //Salto de Linea
 $pdf->Cell(40,26,'',0,0,'C');
-//$pdf->SetTextColor(0, 0, 0);
-$pdf->SetFont('helvetica','B',12); 
-$pdf->Cell(100,6,'RESUMEN DEL PEDIDO',0,0,'C');
+/*$pdf->SetDrawColor(50, 0, 0, 0);
+$pdf->SetFillColor(100, 0, 0, 0); */
+$pdf->SetTextColor(34,68,136);
+//$pdf->SetTextColor(255,204,0); //Amarillo
+//$pdf->SetTextColor(34,68,136); //Azul
+//$pdf->SetTextColor(153,204,0); //Verde
+//$pdf->SetTextColor(204,0,0); //Marron
+//$pdf->SetTextColor(245,245,205); //Gris claro
+//$pdf->SetTextColor(100, 0, 0); //Color Carne
+$pdf->SetFont('helvetica','B', 15); 
+$pdf->Cell(100,6,'LISTA DE EMPLEADOS',0,0,'C');
 
 
 $pdf->Ln(10); //Salto de Linea
-
-/*
-$logo = 'http://groomersacademy.com.co/images/logoCorreo.jpg';
-$pdf->Image($logo, 95, 5, 25, '', '', '', '', false, 300, '', false, false, 0, false, false, false);
-*/
+$pdf->SetTextColor(0, 0, 0); 
 
 
 $pdf->SetFillColor(232,232,232);
-$pdf->SetFont('helvetica','B',12); //LA b ES PARA NEGRITA
+$pdf->SetFont('helvetica','B',12); //La B es para letras en Negritas
 $pdf->Cell(40,6,'Nombre',1,0,'C',1);
 $pdf->Cell(60,6,'Email',1,0,'C',1);
 $pdf->Cell(35,6,'Sueldo',1,0,'C',1);
@@ -89,7 +89,7 @@ llega la linea */
 $pdf->SetFont('helvetica','',10);
 
 
-//SQL
+//SQL para consultas Empleados
 $sqlTrabajadores = ('SELECT * FROM trabajadores ORDER BY fecha_ingreso ASC');
 $query = mysqli_query($con, $sqlTrabajadores);
 $i =1;
