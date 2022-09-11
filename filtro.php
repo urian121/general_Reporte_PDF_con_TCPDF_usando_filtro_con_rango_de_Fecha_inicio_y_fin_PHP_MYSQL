@@ -13,7 +13,7 @@ include('config.php');
 $fechaInit = date("Y-m-d", strtotime($_POST['f_ingreso']));
 $fechaFin  = date("Y-m-d", strtotime($_POST['f_fin']));
 
-$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE  `fecha_ingreso` BETWEEN '$fechaInit' AND '$fechaFin' AND sueldo >'350000' ORDER BY fecha_ingreso ASC");
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE  `fecha_ingreso` BETWEEN '$fechaInit' AND '$fechaFin' ORDER BY fecha_ingreso ASC");
 $query = mysqli_query($con, $sqlTrabajadores);
 //print_r($sqlTrabajadores);
 $total   = mysqli_num_rows($query);

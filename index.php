@@ -44,23 +44,19 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12 text-center" style="padding:100px 0px;">
-              <h3 class="text-center" style="color:#333; font-weight:900;">
-                Filtrar REPORTE con Rango de Fechas Inicio y Final
+              <h3 class="text-center" style="font-size:40px; color:#333; font-weight:900;">
+              &#128562; REPORTE PDF CON PHP y MYSQL 2022 💥 ✅
               </h3>
-              <h3 style="color:#D90E1D !important; font-weight:bold;">
-                PHP Ajax y MYSQL
-              </h3>
+              <img src="assets/img/portada.PNG" alt="Reportes en PDF" class="img-fluid portada">
             </div>
           </div>
         </div>
 
-
       <section>
           <div class="container">
             <div class="row">
-              
-              <div class="col-md-12 text-center mt-5">
-                <form action="DescargarReporte_x_fecha.php" method="post" accept-charset="utf-8">
+              <div class="col-md-12 text-center">
+                <form action="DescargarReporte_x_fecha_PDF.php" method="post" accept-charset="utf-8">
                   <div class="row">
                     <div class="col">
                       <input type="date" name="fecha_ingreso" class="form-control"  placeholder="Fecha de Inicio" required>

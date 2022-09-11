@@ -36,6 +36,19 @@ $pdf->SetCreator('UrianViera');
 $pdf->SetAuthor('UrianViera');
 $pdf->SetTitle('Informe de Empleados');
  
+/** Eje de Coordenadas
+ *          Y
+ *          -
+ *          - 
+ *          -
+ *  X ------------- X
+ *          -
+ *          -
+ *          -
+ *          Y
+ * 
+ * $pdf->SetXY(X, Y);
+ */
 
 //Agregando la primera página
 $pdf->AddPage();
@@ -90,7 +103,11 @@ $pdf->SetFont('helvetica','',10);
 
 
 //SQL para consultas Empleados
-$sqlTrabajadores = ('SELECT * FROM trabajadores ORDER BY fecha_ingreso ASC');
+$fechaInit = date("Y-m-d", strtotime($_POST['fecha_ingreso']));
+$fechaFin  = date("Y-m-d", strtotime($_POST['fechaFin']));
+
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE (fecha_ingreso>='$fechaInit' and fecha_ingreso<='$fechaFin') ORDER BY fecha_ingreso ASC");
+//$sqlTrabajadores = ("SELECT * FROM trabajadores");
 $query = mysqli_query($con, $sqlTrabajadores);
 $i =1;
 while ($dataRow = mysqli_fetch_array($query)) {
@@ -101,5 +118,8 @@ while ($dataRow = mysqli_fetch_array($query)) {
     }
 
 
+//$pdf->AddPage(); //Agregar nueva Pagina
+
 $pdf->Output('Resumen_Pedido_'.date('d_m_y').'.pdf', 'I'); 
-//la D es para forzar la descargarnd del pdf y La I funciona como un target
+// Output funcion que recibe 2 parameros, el nombre del archivo, ver archivo o descargar,
+// La D es para Forzar una descarga
