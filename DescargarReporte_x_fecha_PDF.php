@@ -89,7 +89,7 @@ $pdf->Cell(100,6,'LISTA DE EMPLEADOS',0,0,'C');
 $pdf->Ln(10); //Salto de Linea
 $pdf->SetTextColor(0, 0, 0); 
 
-
+//Almando la cabecera de la Tabla
 $pdf->SetFillColor(232,232,232);
 $pdf->SetFont('helvetica','B',12); //La B es para letras en Negritas
 $pdf->Cell(40,6,'Nombre',1,0,'C',1);
@@ -109,7 +109,7 @@ $fechaFin  = date("Y-m-d", strtotime($_POST['fechaFin']));
 $sqlTrabajadores = ("SELECT * FROM trabajadores WHERE (fecha_ingreso>='$fechaInit' and fecha_ingreso<='$fechaFin') ORDER BY fecha_ingreso ASC");
 //$sqlTrabajadores = ("SELECT * FROM trabajadores");
 $query = mysqli_query($con, $sqlTrabajadores);
-$i =1;
+
 while ($dataRow = mysqli_fetch_array($query)) {
         $pdf->Cell(40,6,($dataRow['nombre']),1,0,'C');
         $pdf->Cell(60,6,$dataRow['email'],1,0,'C');
